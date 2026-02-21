@@ -39,9 +39,6 @@ export default function AgentsPage() {
                             <button className="px-5 py-2.5 glass rounded-xl text-sm font-semibold border border-black/10 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition-all flex items-center justify-center gap-2">
                                 Deploy Local Node
                             </button>
-                            <button className="px-5 py-2.5 bg-slate-900 text-white rounded-xl text-sm font-semibold hover:bg-slate-800 transition-all shadow-lg flex items-center justify-center gap-2">
-                                Coming Soon
-                            </button>
                         </div>
                     </div>
                 </header>

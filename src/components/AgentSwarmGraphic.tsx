@@ -3,27 +3,26 @@
 import React from 'react';
 
 const AgentSwarmGraphic = () => {
-    // Pipeline Flow: Input -> Info Agents -> Risk/Portfolio -> Alpha -> Output
+    // Pipeline Flow: Input -> Info Agents -> Risk/Portfolio -> Alpha -> Output (metrics illustrative)
     const agents = [
-        // Group 1: Inputs (Left)
-        { id: "SRC_1", name: "Market Data", type: "Input", color: "indigo", x: -400, y: -80, endpoints: ["BBG", "RTRS"], metrics: { load: "24%", latency: "0.01ms", uptime: "99.99%", throughput: "12.4GB/s" } },
-        { id: "SRC_2", name: "Direct Feed", type: "Input", color: "blue", x: -400, y: 80, endpoints: ["FIX", "ITCH"], metrics: { load: "18%", latency: "0.01ms", uptime: "99.99%", throughput: "8.2GB/s" } },
+        { id: "SRC_1", name: "Market Data", type: "Input", color: "indigo", x: -400, y: -80, endpoints: ["BBG", "RTRS"], metrics: { load: "24%", latency: "Low ms", uptime: "Target", throughput: "High" } },
+        { id: "SRC_2", name: "Direct Feed", type: "Input", color: "blue", x: -400, y: 80, endpoints: ["FIX", "ITCH"], metrics: { load: "18%", latency: "Low ms", uptime: "Target", throughput: "High" } },
+        { id: "INF_1", name: "SentimentX", type: "Info", color: "cyan", x: -200, y: -160, endpoints: ["NLP"], metrics: { load: "62%", latency: "Low ms", uptime: "Target", throughput: "540 tx/s" } },
+        { id: "INF_2", name: "AlphaScanner", type: "Info", color: "sky", x: -180, y: 0, endpoints: ["L2"], metrics: { load: "45%", latency: "Low ms", uptime: "Target", throughput: "1.2k tx/s" } },
+        { id: "INF_3", name: "DarkPoolScan", type: "Info", color: "teal", x: -200, y: 160, endpoints: ["OTC"], metrics: { load: "31%", latency: "Low ms", uptime: "Target", throughput: "120 tx/s" } },
+        { id: "RSK_1", name: "RiskSentinel", type: "Risk", color: "rose", x: 20, y: -100, endpoints: ["VAR", "LIM"], metrics: { load: "88%", latency: "Low ms", uptime: "Target", throughput: "8.5k req/s" } },
+        { id: "RSK_2", name: "Guardian.ai", type: "Portfolio", color: "emerald", x: 20, y: 100, endpoints: ["PRT", "COR"], metrics: { load: "12%", latency: "Low ms", uptime: "Target", throughput: "240 signals/s" } },
+        { id: "EXE_1", name: "NeuralArb", type: "Alpha", color: "violet", x: 240, y: -80, endpoints: ["STAT"], metrics: { load: "74%", latency: "Low ms", uptime: "Target", throughput: "2.1k orders/s" } },
+        { id: "EXE_2", name: "LiquidityFlow", type: "Alpha", color: "fuchsia", x: 240, y: 80, endpoints: ["VWAP"], metrics: { load: "51%", latency: "Low ms", uptime: "Target", throughput: "4.6k orders/s" } },
+        { id: "OUT_1", name: "Execution", type: "Output", color: "amber", x: 420, y: 0, endpoints: ["NY4", "LD4", "BIN"], metrics: { load: "42%", latency: "Low ms", uptime: "Target", throughput: "High" } },
+    ];
 
-        // Group 2: Information Agents (Mid-Left)
-        { id: "INF_1", name: "SentimentX", type: "Info", color: "cyan", x: -200, y: -160, endpoints: ["NLP"], metrics: { load: "62%", latency: "1.2ms", uptime: "99.95%", throughput: "540 tx/s" } },
-        { id: "INF_2", name: "AlphaScanner", type: "Info", color: "sky", x: -180, y: 0, endpoints: ["L2"], metrics: { load: "45%", latency: "0.8ms", uptime: "99.98%", throughput: "1.2k tx/s" } },
-        { id: "INF_3", name: "DarkPoolScan", type: "Info", color: "teal", x: -200, y: 160, endpoints: ["OTC"], metrics: { load: "31%", latency: "2.4ms", uptime: "99.92%", throughput: "120 tx/s" } },
-
-        // Group 3: Risk & Portfolio (Center)
-        { id: "RSK_1", name: "RiskSentinel", type: "Risk", color: "rose", x: 20, y: -100, endpoints: ["VAR", "LIM"], metrics: { load: "88%", latency: "0.1ms", uptime: "100.0%", throughput: "8.5k req/s" } },
-        { id: "RSK_2", name: "Guardian.ai", type: "Portfolio", color: "emerald", x: 20, y: 100, endpoints: ["PRT", "COR"], metrics: { load: "12%", latency: "0.4ms", uptime: "99.99%", throughput: "240 signals/s" } },
-
-        // Group 4: Alpha / Execution Agents (Mid-Right)
-        { id: "EXE_1", name: "NeuralArb", type: "Alpha", color: "violet", x: 240, y: -80, endpoints: ["STAT"], metrics: { load: "74%", latency: "0.05ms", uptime: "99.97%", throughput: "2.1k orders/s" } },
-        { id: "EXE_2", name: "LiquidityFlow", type: "Alpha", color: "fuchsia", x: 240, y: 80, endpoints: ["VWAP"], metrics: { load: "51%", latency: "0.08ms", uptime: "99.98%", throughput: "4.6k orders/s" } },
-
-        // Group 5: Outputs / Execution Routing (Right)
-        { id: "OUT_1", name: "Execution", type: "Output", color: "amber", x: 420, y: 0, endpoints: ["NY4", "LD4", "BIN"], metrics: { load: "42%", latency: "0.02ms", uptime: "99.99%", throughput: "15.8GB/s" } },
+    const flowSteps = [
+        { n: 1, label: "Data Ingest", desc: "Feeds enter" },
+        { n: 2, label: "Info Agents", desc: "Signals" },
+        { n: 3, label: "Risk & Portfolio", desc: "Veto / size" },
+        { n: 4, label: "Alpha / Execution", desc: "Orders" },
+        { n: 5, label: "Output", desc: "Venues" },
     ];
 
     // Define the directed edges between nodes to show data flow
@@ -75,7 +74,27 @@ const AgentSwarmGraphic = () => {
     };
 
     return (
-        <div className="relative w-full h-[700px] md:h-[800px] flex items-center justify-center overflow-hidden rounded-[32px] md:rounded-[48px] border border-black/5 my-12 md:my-20">
+        <div className="my-12 md:my-20">
+            {/* How it works: 5 steps with cycling highlight */}
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-6">
+                {flowSteps.map((step, idx) => (
+                    <div
+                        key={step.n}
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white border border-slate-200 shadow-sm"
+                        style={{ animationDelay: `${idx * 0.8}s` }}
+                    >
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-900 text-xs font-bold text-white">
+                            {step.n}
+                        </span>
+                        <div>
+                            <p className="text-xs font-semibold text-slate-900">{step.label}</p>
+                            <p className="text-[10px] text-slate-500">{step.desc}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            <div className="relative w-full h-[700px] md:h-[800px] flex items-center justify-center overflow-hidden rounded-[32px] md:rounded-[48px] border border-black/5 bg-white">
             {/* Background Layer */}
             <div className="absolute inset-0 bg-white" />
 
@@ -83,9 +102,6 @@ const AgentSwarmGraphic = () => {
             <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 md:w-96 h-96 bg-indigo-500/5 blur-[100px] rounded-full" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/5 blur-[120px] rounded-full" />
             <div className="absolute top-1/2 right-0 -translate-y-1/2 w-64 md:w-96 h-96 bg-amber-500/5 blur-[100px] rounded-full" />
-
-            {/* Grid Pattern */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:50px_50px]" />
 
             {/* SVG Edges Layer */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid meet">
@@ -267,17 +283,24 @@ const AgentSwarmGraphic = () => {
                     Execution Latency Floor
                 </div>
                 <div className="text-sm font-mono text-cyan-600 font-bold mt-1">
-                    0.04 ms
+                    Low ms
                 </div>
             </div>
 
-            {/* Architecture Labels */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-24 opacity-30 pointer-events-none hidden md:flex">
-                <div className="text-xs font-mono text-slate-900 uppercase tracking-[0.2em] w-32 text-center">Data Ingest</div>
-                <div className="text-xs font-mono text-slate-900 uppercase tracking-[0.2em] w-32 text-center">Info Agents</div>
-                <div className="text-xs font-mono text-slate-900 uppercase tracking-[0.2em] w-32 text-center">Risk Swarm</div>
-                <div className="text-xs font-mono text-slate-900 uppercase tracking-[0.2em] w-32 text-center">Execution</div>
+            {/* Stage labels (more visible) */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center justify-center gap-12 md:gap-20 pointer-events-none">
+                {flowSteps.map((step) => (
+                    <div key={step.n} className="text-center">
+                        <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider block">{step.label}</span>
+                    </div>
+                ))}
             </div>
+
+            {/* Animated "data flow" overlay: left-to-right sweep (subtle) */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[32px] md:rounded-[48px]">
+                <div className="absolute inset-0 w-64 bg-gradient-to-r from-transparent via-cyan-500/5 to-transparent animate-flow-sweep" />
+            </div>
+        </div>
         </div>
     );
 };

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -26,9 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-grid`}>
-        <div className="scanline" />
-
+      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}>
         {/* Background Effects */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden">
         </div>
@@ -39,19 +38,18 @@ export default function RootLayout({
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <nav className="flex items-center justify-between h-16">
                 {/* Logo */}
-                <a href="/" className="flex items-center gap-3 group">
+                <Link href="/" className="flex items-center gap-3 group">
                   <span className="text-xl font-bold tracking-tight">
                     Quant Pype
                   </span>
-                </a>
+                </Link>
 
                 {/* Desktop Navigation */}
                 <div className="hidden md:flex items-center gap-1 bg-slate-100/50 p-1 rounded-lg border border-black/5">
-                  <a href="/" className="nav-link">Home</a>
-                  <a href="/pipelines" className="nav-link">Pipelines</a>
-                  <a href="/agents" className="nav-link">Agents</a>
-                  <a href="/dashboard" className="nav-link">Terminal</a>
-                  <a href="/wiki" className="nav-link">Wiki</a>
+                  <Link href="/" className="nav-link">Home</Link>
+                  <Link href="/pipelines" className="nav-link">Pipelines</Link>
+                  <Link href="/agents" className="nav-link">Agents</Link>
+                  <Link href="/wiki" className="nav-link">Wiki</Link>
                 </div>
 
                 {/* CTA Button */}
@@ -95,10 +93,9 @@ export default function RootLayout({
                 <div>
                   <h4 className="text-sm font-semibold mb-4 text-slate-900">Platform</h4>
                   <ul className="space-y-2">
-                    <li><a href="/pipelines" className="text-slate-500 hover:text-slate-900 text-sm transition-colors">Pipelines</a></li>
-                    <li><a href="/agents" className="text-slate-500 hover:text-slate-900 text-sm transition-colors">Agents</a></li>
-                    <li><a href="/dashboard" className="text-slate-500 hover:text-slate-900 text-sm transition-colors">Terminal</a></li>
-                    <li><a href="/wiki" className="text-slate-500 hover:text-slate-900 text-sm transition-colors">Wiki</a></li>
+                    <li><Link href="/pipelines" className="text-slate-500 hover:text-slate-900 text-sm transition-colors">Pipelines</Link></li>
+                    <li><Link href="/agents" className="text-slate-500 hover:text-slate-900 text-sm transition-colors">Agents</Link></li>
+                    <li><Link href="/wiki" className="text-slate-500 hover:text-slate-900 text-sm transition-colors">Wiki</Link></li>
                   </ul>
                 </div>
 
@@ -114,7 +111,7 @@ export default function RootLayout({
                       <span className="text-slate-500 text-sm">Latency: 4ms</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-slate-500 text-sm">Uptime: 99.99%</span>
+                      <span className="text-slate-500 text-sm">Target uptime</span>
                     </div>
                   </div>
                 </div>

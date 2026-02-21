@@ -1,107 +1,153 @@
-# QuantPype - Platform Wiki
+# QuantPype – Platform Wiki
 
-## 1. Vision & Mission
-**Vision:** To democratize and decentralize institutional-grade quantitative finance through hybrid intelligence, bridging local data sovereignty with cloud-scale monitoring.
-**Mission:** To provide an ultra-low latency, highly secure, and collaborative AI-driven platform for automating high-frequency trading pipelines and orchestrating collective quant agents that manage the next generation of funds.
+## 1. What QuantPype Is (Category)
 
----
+**QuantPype is an open platform and framework**, not a traditional SaaS product.
 
-## 2. Idea & Core Purpose
-**The Idea:** QuantPype is a Next.js-based terminal interface that orchestrates a swarm of specialized AI agents. It safely connects sensitive proprietary trading logic (running on isolated local hardware) with distributed global market monitoring swarms (running on scalable cloud nodes).
+| Term | How it applies |
+|------|----------------|
+| **Framework** | You run it yourself (self-host). You plug in your own strategies, agents, and data sources. QuantPype provides the orchestration layer, risk framework, and UI. |
+| **Platform** | It’s the layer on which you build: pipelines, agents, dashboards, and (optionally) cloud services. It can run fully local or hybrid. |
+| **Optional SaaS** | Some parts can be offered as a service later (e.g. hosted backtesting, shared sentiment APIs). Core alpha and execution stay under your control. |
 
-**The Purpose:** 
-Traditional quantitative funds rely on monolithic, highly centralized, and expensive architectures. QuantPype decentralizes this paradigm by allowing traders to run "Alpha" generation locally while offloading global sentiment analysis, alternative data scraping, and general risk parity calculations to a coordinated cloud swarm.
-
-**What Problem It Solves:**
-
-Due to the depth of the problems QuantPype addresses—specifically regarding Privacy vs. Public Cloud Scalability, Execution Speed Bottlenecks (Latency), and Orchestrating Massive Data Pipelines—this topic has been separated into its own detailed document.
-
-Please refer to the dedicated [What Problem It Solves](./what-problem-it-solves.md) document for a comprehensive breakdown of the core issues in algorithmic trading and how QuantPype's architecture solves them.
+**In short:** Self-hostable orchestration and execution framework for quant workflows, with optional cloud components. You own the code and the sensitive logic; we don’t host your alpha or your orders.
 
 ---
 
-## 3. Nature & Actions
-- **Nature:** A hybrid decentralized AI orchestration application and web-based trading execution terminal.
-- **Actions & Components:** 
-  - **Pipelines:** Ingest market data and stream strategy execution (e.g., *RiskSentinel, NeuralArb, LiquidityFlow*). They handle massive throughputs (up to 5.4GB/s).
-  - **Agents:** Collaborative SLMs (Small Language Models) focusing on specific tasks (e.g., *AlphaScanner, DarkPoolScan*). For detailed information on how they are trained (Distillation/Quantization) and used in a coordinated swarm, see the [Agent Orchestration Guide](./agents.md), and for how they enforce capital preservation, see the [Risk & Portfolio Management Guide](./risk-portfolio-management.md).
-  - **Dashboard:** Provides real-time visibility into total fund values, active strategies, global exposure, and system execution latency.
+## 2. Vision & Mission
+
+**Vision:** Make it practical for smaller teams to run institutional-style quant workflows by keeping alpha and execution local while using cloud only where it’s safe and scalable.
+
+**Mission:** Provide a secure, local-first platform that orchestrates pipelines and agents (rule-based and/or small ML models), with clear separation between alpha generation and risk control, and a single terminal-style UI to run and monitor everything.
 
 ---
 
-## 4. Market Research
-The quantitative finance market is rapidly shifting toward AI-assisted strategy execution. However, standard generative AI tools suffer from severe latency limitations (hundreds of milliseconds or seconds) and hallucination risks, making them unsuitable for live electronic trading. 
-- **Target Audience:** Boutique quant funds, autonomous proprietary trading firms, and advanced algorithmic retail traders.
-- **Competitors:** Existing institutional platforms (e.g., Bloomberg Terminal functionalities, Palantir Foundry for financial services) typically lack out-of-the-box local/cloud AI swarm coordination explicitly tailored for localized quant flows.
-- **Market Edge (The Moat):** A relentless focus on "Zero-Knowledge Security" and small, ultra-fast local inference capabilities rather than API-dependent massive models. This gives users absolute control over their trading IP (Intellectual Property).
+## 3. Idea & Core Purpose
+
+**The idea:** QuantPype is a web-based terminal and orchestration layer that connects:
+
+- **Local components:** Your hardware runs execution, alpha logic, and keys. Nothing sensitive is required to leave your environment.
+- **Optional cloud components:** Non-sensitive workloads (e.g. sentiment aggregation, historical backtesting, data ingest) can run in your own or a trusted cloud.
+
+**The purpose:** Many quant setups are either fully on-prem (hard to scale) or fully in the cloud (IP and data concerns). QuantPype is designed for a **hybrid** model: keep what must stay private on your side, and use cloud only for what you choose to offload.
+
+For a concise breakdown of the problems this addresses, see [What Problem It Solves](./what-problem-it-solves.md).
 
 ---
 
-## 5. Technical Infrastructure & Tech Stack
-**Frontend / Web App:**
-- **Framework:** Next.js (App Router) combined with React 19.
-- **Styling:** Tailwind CSS v4, utilizing native CSS cascade layers and a custom UI system featuring glassmorphism and a cyberpunk/terminal aesthetic.
-- **Language:** TypeScript for type-safe react components, state management, and props.
+## 4. Features (Feasible Scope)
 
-**Architecture (Conceptual Backend):**
-- **Sovereign Local Nodes:** Software nodes running exclusively on the user's localized hardware (GPUs). Responsible for cryptographic key generation, secure trade execution, and highly classified Alpha logic. 
-- **Cloud Swarm:** Distributed containerized servers handling non-critical, heavily parallelized tasks like global news sentiment analysis and massive historical backtesting.
-- **Quantum Bridge:** The secure bidirectional communication layer (e.g., WebSocket/gRPC streams coupled with 256-bit encryption) syncing local and cloud nodes.
+These are features that are **realistic to build and operate**:
+
+**Core (framework)**
+
+- **Pipelines:** Configure and run data and execution pipelines (e.g. market data → signals → risk check → execution). Throughput depends on your infra; the platform focuses on correctness and observability, not marketing numbers.
+- **Agents:** Rule-based and/or small, task-specific models (e.g. sentiment score, risk checks, sizing). See [Agent Orchestration](./agents.md).
+- **Terminal / Dashboard:** Single UI to view strategies, exposure, risk, and system health.
+- **Risk layer:** Configurable limits (position, leverage, exposure), fat-finger and wash-trade checks, optional volatility-based sizing. See [Risk & Portfolio Management](./risk-portfolio-management.md).
+
+**Extended (realistic additions)**
+
+- **Backtesting:** Run strategies on historical data (local or in your cloud); no need to send alpha to a third party.
+- **Paper trading:** Same pipelines and agents against a simulated book before going live.
+- **Audit & compliance:** Log all orders, risk decisions, and config changes for review and export.
+- **API:** REST and/or WebSocket API to add custom agents, pull signals, or integrate with your existing systems.
+- **Broker / venue adapters:** Pluggable adapters for brokers and APIs you’re licensed to use (you remain responsible for data and execution agreements).
+- **Local-first execution:** Execution and alpha run on your nodes; optional “bridge” to sync only non-sensitive data with your own cloud.
+
+**What we don’t promise**
+
+- Sub-millisecond *end-to-end* “news to order” latency (see latency section below).
+- “Zero-knowledge” in the cryptographic sense; we mean “your alpha and orders don’t leave your control.”
+- Throughput figures (e.g. GB/s) as product guarantees; those depend on your hardware and data contracts.
 
 ---
 
-## 6. Optimization Strategy: The Power of Smaller Models
-To achieve the **0.04ms execution latency** stated in the terminal, QuantPype entirely circumvents monolithic Foundational Models (like GPT-4), relying instead on **Small Language Models (SLMs)** and specialized neural networks.
+## 5. Technical Stack & Architecture
 
-1. **Model Quantization:**
-   Models are highly quantized (reduced from 32-bit floating-point to 4-bit or 8-bit integers using formats like GGUF). This allows the entire model to fit inside local GPU VRAM or even directly within a fast CPU cache, maximizing memory bandwidth and throughput.
-2. **Knowledge Distillation:**
-   Massive "teacher" models are used offline to train tiny "student" models. These student models are highly specialized to identify specific binary market patterns (e.g., a model *only* trained to read FIX protocol messages and output buy/sell integers).
-3. **Agentic Specialization (The Swarm):**
-   Instead of one overarching model doing all the work, QuantPype orchestrates a swarm of micro-models. E.g., `SentimentX` purely parses text strings for sentiment scores, while `VolatilityNexus` only does math for options pricing. This ensures computations are tiny, concurrent, and practically instantaneous.
+**Web app (this repo)**
+
+- Next.js (App Router), React 19, Tailwind CSS, TypeScript. Serves as the terminal UI and can be deployed anywhere (e.g. GitHub Pages, your own server).
+
+**Backend / runtime (conceptual)**
+
+- **Local nodes:** Your machines run execution, alpha, and keys. Can use GPUs for small-model inference if you add that later.
+- **Optional cloud:** Your own or managed services for backtesting, sentiment, or data ingest. Communication over TLS (e.g. mTLS); we use “Quantum Bridge” in docs to mean this secure link, not quantum cryptography.
+- **Orchestration:** Pipelines and agents are defined and scheduled by the platform; actual execution can be local containers, processes, or services you wire in.
 
 ---
 
-## 7. Step-by-Step Procedure & Usage Guide
+## 6. Latency & Performance (Realistic)
 
-Below is the definitive guide on how the web application infrastructure runs, executes, and is utilized.
+- **Single-step inference:** A small, quantized model doing one task (e.g. classify a signal) can reach low millisecond or sub‑millisecond *inference* on good hardware. We do not quote a single “0.04 ms” number for the whole system.
+- **Full loop:** From “data in” to “order sent” involves multiple steps (ingest, optional sentiment, alpha, risk, sizing, execution). End-to-end latency is typically in the **milliseconds to tens of milliseconds** for a well-tuned setup, not microseconds.
+- **Throughput:** Depends on your data sources, network, and hardware. The platform is built to handle streaming and batch in a manageable way, not to promise specific GB/s.
 
-### Phase 1: Environment Setup
-Before execution, the engineer or trader must provision the codebase.
+---
 
-1. **Clone & Install Dependencies:**
-   ```bash
-   git clone <repo_url>
-   cd quantpype
-   npm install
-   ```
-   *Explanation:* The `npm install` command reads the `package.json` file to download necessary dependencies like React 19, Next.js, and Tailwind CSS v4 into the `node_modules` directory locally.
+## 7. Usage (Web App)
 
-### Phase 2: Running the Web Application
-Depending on the environment, the Next.js server is started differently.
+**Run the web app (terminal UI)**
 
-1. **Start Local Development Server:**
-   ```bash
-   npm run dev
-   ```
-   *Explanation:* This command spins up the Next.js local development server (typically on `http://localhost:3000`). It compiles the React components on the fly (JIT) and watches for file changes, utilizing Hot Module Replacement (HMR) for instant visual updates without page refreshes.
+```bash
+git clone <repo_url>
+cd quantpype
+npm install
+npm run dev
+```
 
-2. **Build & Deploy for Production:**
-   ```bash
-   npm run build
-   ```
-   *Explanation:* The `build` command instructs Next.js to compile the application into an optimized, minified production build inside the `.next` folder. It statically generates pages where possible to maximize speed and SEO.
-   
-   ```bash
-   npm start
-   ```
-   *Explanation:* The `start` command runs the optimized production server. It utilizes the pre-built files created by the `build` command to serve the application to live users globally with minimum TTFB (Time To First Byte).
+Open the app in the browser. For production, build and serve (or deploy the static export):
 
-### Phase 3: System Execution Flow (Application Use)
-Once the platform is running, a typical operational cycle looks like this:
+```bash
+npm run build
+npm start
+```
 
-- **Step 1 - Initialization:** The user securely logs into the Web Dashboard. The `Quantum Bridge` initializes a secure WebSocket connection syncing the UI to the backend Swarm.
-- **Step 2 - Pipeline Activation:** The user navigates to the "Pipelines" tab to toggle data streams (e.g., `AlphaScanner-01`). The system begins ingesting market data sequences at massive throughput rates.
-- **Step 3 - Agent Inference:** The incoming data is passed in small chunks to the local SLM agents. These quantized models evaluate the data streams for signals (e.g., detecting a dark pool liquidity block).
-- **Step 4 - Risk Parity & Execution:** If an execution signal exceeds the confidence threshold, the `RiskSentinel` agent rapidly checks global exposure limits. If approved, the trade is sent out through the `NeuralArb` local execution agent directly to the exchange.
-- **Step 5 - Feedback Loop & Telemetry:** The UI dashboard reacts defensively, mapping updates in real-time, reflecting new net fund values, execution latencies, and streaming system logs back to the user interface.
+**Typical flow (when backend exists)**
+
+1. Log in to the dashboard; connect to your local (or hybrid) backend.
+2. Configure and enable pipelines (data + strategies).
+3. Agents consume data and produce signals; risk layer approves or blocks; execution runs on your nodes.
+4. Dashboard shows positions, risk, and logs.
+
+The current repo is the **front-end and documentation**. The execution engine, broker adapters, and data connectors are separate components you or the project would implement against this framework.
+
+---
+
+## 8. Pipeline Workflow (Overview)
+
+A typical quant pipeline in QuantPype flows through six layers:
+
+1. **Data** — Market data, alternative data, news/sentiment, reference data. Can be local or from your cloud ingest.
+2. **Research & Alpha** — Signal generation, backtesting, alpha models, factor library. Alpha logic stays local.
+3. **Risk & Compliance** — Pre-trade risk, VaR/exposure, compliance checks, wash-trade, margin. Central veto/size layer.
+4. **Portfolio** — Sizing, allocation, rebalancing, correlation monitoring. Ensures strategies don’t over-concentrate.
+5. **Execution** — Order management, smart routing, venues, FIX/API. Runs on your nodes.
+6. **Post-trade** — Settlement, reporting, P&L attribution, audit log. Keeps everything traceable.
+
+Data and backtest can run in the cloud; alpha, risk, and execution run locally. The UI (Pipelines page) shows this workflow; you configure which agents and pipelines belong to each layer.
+
+---
+
+## 9. Who It’s For
+
+- **Quant developers** — Build and plug in strategies and agents; use the platform as the orchestration and risk layer.
+- **Risk / ops** — Configure limits, monitor exposure, and audit decisions from one dashboard.
+- **Small teams and boutiques** — Run an institutional-style stack without sending alpha to a vendor; scale only the parts you choose (e.g. data, backtest) in the cloud.
+
+Not aimed at ultra-HFT shops that need microsecond-level, exchange-co-located execution; the design targets systematic and mid-frequency workflows where millisecond-to-tens-of-milliseconds latency is acceptable.
+
+---
+
+## 10. Glossary
+
+| Term | Meaning |
+|------|--------|
+| **Alpha** | Proprietary logic or signal that generates trade ideas. Kept local in QuantPype. |
+| **Agent** | A single-purpose unit: rule-based or small model. Does one task (e.g. sentiment, risk check, sizing). |
+| **Pipeline** | A configured flow of data and processing (e.g. market data → signals → risk → execution). |
+| **Risk layer** | Central component that sees every proposed trade and can approve, reduce size, or block. |
+| **Quantum Bridge** | In docs, the encrypted link (e.g. mTLS) between your local nodes and optional cloud. Not quantum cryptography. |
+| **Local node** | Your hardware running execution, alpha, and keys. |
+| **Cloud swarm** | Optional set of services (e.g. sentiment, backtest) running in your or a trusted cloud. |
+| **SLM** | Small Language Model. Task-specific, quantized model for low-latency inference. |

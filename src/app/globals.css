@@ -259,6 +259,19 @@ main {
   }
 }
 
+@keyframes flow-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-flow-sweep {
+  animation: flow-sweep 12s ease-in-out infinite;
+}
+
 @keyframes glow {
 
   0%,
@@ -367,31 +380,7 @@ main {
   animation-delay: 0.6s;
 }
 
-/* Scanline Effect */
-.scanline {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  z-index: 9999;
-  background: repeating-linear-gradient(0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.03) 2px,
-      rgba(0, 0, 0, 0.03) 4px);
-  opacity: 0.5;
-}
-
 /* Background Effects */
-.bg-grid {
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-}
-
 .bg-dots {
   background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
   background-size: 20px 20px;

@@ -1,6 +1,6 @@
-# QuantPype v1.0.0
+# QuantPype
 
-Collaborative Quant Intelligence - Automated pipelines and collective quant agents managing the next generation of funds.
+**Open platform and framework** for quantitative workflows: orchestrate pipelines and agents (rule-based and/or small ML models), keep alpha and execution local, use cloud only where you choose. Self-hostable; optional SaaS components later. See the [Wiki](./doc/wiki.md) for vision, features, and docs.
 
 ## Getting Started
 
@@ -30,6 +30,25 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on GitHub Pages
+
+1. **Push the repo to GitHub** (if you haven’t already).
+
+2. **Turn on GitHub Pages:**
+   - Repo → **Settings** → **Pages**
+   - Under **Build and deployment**, set **Source** to **GitHub Actions**.
+
+3. **Trigger the workflow:**
+   - Push to the `main` or `master` branch, or run the workflow from **Actions** → **Deploy to GitHub Pages** → **Run workflow**.
+
+4. **Open your site:**  
+   `https://<your-username>.github.io/<repo-name>/`  
+   (e.g. `https://myuser.github.io/quantpype/`).
+
+The workflow builds the static export and deploys the `out` folder. For a **user/org site** (`<username>.github.io` repo), remove or leave `BASE_PATH` unset in the workflow and redeploy so the app is served from the root.
+
+---
 
 ## Deploy on Vercel
 

@@ -8,8 +8,8 @@ export default function Home() {
       color: "cyan"
     },
     {
-      title: "Zero-Knowledge Security",
-      description: "Your alpha strategies remain encrypted and private, even during execution.",
+      title: "Local-First Security",
+      description: "Your alpha and execution run on your infrastructure; sensitive logic never has to leave your control.",
       color: "violet"
     },
     {
@@ -83,7 +83,7 @@ export default function Home() {
               <span>256-bit Encryption</span>
             </div>
             <div className="flex items-center gap-2">
-              <span>99.99% Uptime</span>
+              <span>Target uptime</span>
             </div>
           </div>
         </div>
@@ -192,7 +192,7 @@ export default function Home() {
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {[
-                    { vector: "Strategic Privacy", local: "Absolute (On-Prem)", cloud: "Zero-Knowledge Enclaves" },
+                    { vector: "Strategic Privacy", local: "Absolute (On-Prem)", cloud: "Encrypted, No Alpha Data" },
                     { vector: "Compute Power", local: "User Hardware dependent", cloud: "Infinite (Petaflop scaling)" },
                     { vector: "Typical Latency", local: "Ultra-low (Sub-0.01ms)", cloud: "Regional (1ms - 5ms)" },
                     { vector: "Connectivity", local: "Direct Exchange Feeds", cloud: "Multi-Region Distributed" },
